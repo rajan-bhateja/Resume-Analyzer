@@ -1,6 +1,7 @@
 import streamlit as st
 from langchain_community.document_loaders import PyPDFLoader
 import tempfile
+import google.generativeai as genai
 
 st.set_page_config(layout="wide", page_title="Resume Analyzer")
 
@@ -15,10 +16,19 @@ try:
             tmp_file.write(uploaded_resume.read())
             tmp_file_path = tmp_file.name
 
-        st.subheader("Resume Content:")
-        loader = PyPDFLoader(file_path=tmp_file_path, extraction_mode="layout", mode="page")
+        st.subheader("Recommendations and Suggestions:")
+        loader = PyPDFLoader(file_path=tmp_file_path, extraction_mode="layout", mode="single")
         docs = loader.load()
-        st.write(docs[15].page_content)
+        # st.write(docs[0].page_content)
+
+        genai.configure(api_key="gemini_api_key")
+
+        client = genai.GenerativeModel("gemini-2.0-flash")
+        response = client.generate_content(
+            contents=f"Mention 5 good things and suggest 5 recommendations for the resume {docs[0].page_content}"
+        )
+
+        st.markdown(response.text)
 
 except Exception as e:
     st.error(f"An error occurred: {e}")
