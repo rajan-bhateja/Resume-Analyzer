@@ -1,6 +1,6 @@
 # Resume Analyzer 🧠📄
 
-A Streamlit-powered web app that analyzes resumes and provides valuable **strengths** and **recommendations** using **LangChain** for PDF handling and **Google Gemini** for content analysis.
+A Streamlit-powered web app that analyzes resumes and provides valuable **strengths** and **recommendations** using **LangChain** for PDF handling and **Google Gemini** for content analysis along with the ability to **download** said recommendations.
 
 ---
 
@@ -12,6 +12,7 @@ A Streamlit-powered web app that analyzes resumes and provides valuable **streng
 - Get:
   - ✅ 5 good things about your resume
   - 📌 5 personalized improvement suggestions
+  - ⬇️ The ability to download recommendations
 - Clean UI with **Streamlit**
 
 ---
