@@ -16,7 +16,7 @@ try:
             tmp_file.write(uploaded_resume.read())
             tmp_file_path = tmp_file.name
 
-        st.subheader("Recommendations and Suggestions:")
+        st.subheader("Recommendations:")
         loader = PyPDFLoader(file_path=tmp_file_path, extraction_mode="layout", mode="single")
         docs = loader.load()
         # st.write(docs[0].page_content)
@@ -29,6 +29,8 @@ try:
         )
 
         st.markdown(response.text)
+
+        st.download_button(label="Download recommendations", data=response.text, file_name="recommendations.txt", icon=":material/download:", on_click="ignore")
 
 except Exception as e:
     st.error(f"An error occurred: {e}")
