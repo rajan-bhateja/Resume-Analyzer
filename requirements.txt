@@ -1,2 +1,6 @@
 pydantic
 typing
+python-multipart
+fastapi
+uvicorn
+uuid
