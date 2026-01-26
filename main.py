@@ -1,4 +1,5 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException
+from backend.utilities import validate_email, validate_resume_extension
 
 app = FastAPI(title="Resume Analyzer")
 
@@ -9,20 +10,19 @@ async def get_status() -> dict[str, str]:
 
 
 @app.post("/analyze")
-async def analyze_resume(email: str = File(...), resume: UploadFile = File(...)):
-    # Read the filename
-    filename = resume.filename
+async def analyze_resume(
+    email: str = Form(...),
+    resume: UploadFile = File(...)
+):
+    try:
+        validated_email = validate_email(email)
+        validated_filename = validate_resume_extension(resume.filename)
 
-    # Read the content (optional, depending on your logic)
-    # content = await resume.read()
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
     return {
-        "email": email,
-        "filename": filename,
+        "email": validated_email,
+        "filename": validated_filename,
         "content_type": resume.content_type
     }
-
-
-@app.post("/refine")
-def refine_resume():
-    pass
