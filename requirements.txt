@@ -1,6 +1,7 @@
 pydantic
 typing
 python-multipart
+email-validator
 fastapi
 uvicorn
 uuid
